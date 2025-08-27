@@ -1,0 +1,9 @@
+c:\Users\PC\Documents\projrct 25.08.25\backend\SubactivityApi\obj\Debug\net9.0\SubactivityApi.csproj.AssemblyReference.cache
+c:\Users\PC\Documents\projrct 25.08.25\backend\SubactivityApi\obj\Debug\net9.0\rpswa.dswa.cache.json
+c:\Users\PC\Documents\projrct 25.08.25\backend\SubactivityApi\obj\Debug\net9.0\SubactivityApi.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\PC\Documents\projrct 25.08.25\backend\SubactivityApi\obj\Debug\net9.0\SubactivityApi.AssemblyInfoInputs.cache
+c:\Users\PC\Documents\projrct 25.08.25\backend\SubactivityApi\obj\Debug\net9.0\SubactivityApi.AssemblyInfo.cs
+c:\Users\PC\Documents\projrct 25.08.25\backend\SubactivityApi\obj\Debug\net9.0\SubactivityApi.csproj.CoreCompileInputs.cache
+c:\Users\PC\Documents\projrct 25.08.25\backend\SubactivityApi\obj\Debug\net9.0\SubactivityApi.MvcApplicationPartsAssemblyInfo.cs
+c:\Users\PC\Documents\projrct 25.08.25\backend\SubactivityApi\obj\Debug\net9.0\SubactivityApi.MvcApplicationPartsAssemblyInfo.cache
+c:\Users\PC\Documents\projrct 25.08.25\backend\SubactivityApi\obj\Debug\net9.0\SubactivityApi.sourcelink.json

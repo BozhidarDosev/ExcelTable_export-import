@@ -4,7 +4,7 @@ import { initDropzoneImport } from "./excel-import.js";
 import { safeToast } from "./safeToast.js";
 
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 let table = null;
 let copiedRowData = null;
 
@@ -98,5 +98,39 @@ table = new Tabulator("#subactivities-table", {
     });
 
     darkTheme();
+    
+    try {
+    const res = await fetch("https://localhost:5000/api/subactivities");
+    const savedData = await res.json();
+    table.setData(savedData);
+  } catch (err) {
+    console.error("Load error:", err);
+  }
 
- });
+  // Зареждане от бекенда
+  try {
+    const res = await fetch("https://localhost:5000/api/subactivities");
+    const savedData = await res.json();
+    table.setData(savedData);
+  } catch (err) {
+    console.error("Load error:", err);
+  }
+
+  document.getElementById("test").addEventListener("click", async () => {
+    try {
+      const response = await fetch("https://localhost:5000/api/subactivities", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(table.getData())
+      });
+      if (response.ok) {
+        await safeToast("success", "Saved!", 1);
+      } else {
+        await safeToast("error", "Failed to save", 2);
+      }
+    } catch (err) {
+      console.error("Save error:", err);
+    }
+  });
+
+}); 
