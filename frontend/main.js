@@ -99,8 +99,8 @@ table = new Tabulator("#subactivities-table", {
 
     darkTheme();
     
-    try {
-    const res = await fetch("https://localhost:5000/api/subactivities");
+  try {
+    const res = await fetch("http://localhost:5028/api/subactivities");
     const savedData = await res.json();
     table.setData(savedData);
   } catch (err) {
@@ -109,27 +109,28 @@ table = new Tabulator("#subactivities-table", {
 
   // Зареждане от бекенда
   try {
-    const res = await fetch("https://localhost:5000/api/subactivities");
-    const savedData = await res.json();
-    table.setData(savedData);
-  } catch (err) {
-    console.error("Load error:", err);
+    const res = await fetch("http://localhost:5028/api/subactivities");
+    const data = await res.json();
+    table.setData(data);
+  } catch (e) {
+    console.error("Load error:", e);
   }
 
+  // Save
   document.getElementById("test").addEventListener("click", async () => {
     try {
-      const response = await fetch("https://localhost:5000/api/subactivities", {
+      const res = await fetch("http://localhost:5028/api/subactivities", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(table.getData())
       });
-      if (response.ok) {
-        await safeToast("success", "Saved!", 1);
+      if (res.ok) {
+        alert("Saved!");
       } else {
-        await safeToast("error", "Failed to save", 2);
+        alert("Failed to save");
       }
-    } catch (err) {
-      console.error("Save error:", err);
+    } catch (e) {
+      console.error("Save error:", e);
     }
   });
 
