@@ -18,6 +18,7 @@
         // Animate fade-out and remove
         setTimeout(() => {
             toast.classList.add("opacity-0");
-            setTimeout(() => toast.remove(), 300);
-        }, durationSeconds * 600);
+            setTimeout(() => toast.remove(), 1000);
+        }, durationSeconds * 1500);   // Visible for durationSeconds + fade time
+        
     }
