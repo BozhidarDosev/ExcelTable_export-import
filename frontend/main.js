@@ -2,15 +2,16 @@ import { darkTheme } from "./dark-theme.js";
 import { exportTableToExcel } from "./excel-export.js";
 import { initDropzoneImport } from "./excel-import.js";
 import { safeToast } from "./safeToast.js";
-
+import { clearTable } from "./clearTable.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   let table = null;
   let copiedRowData = null;
+  let tabledata = [];
 
-  const tabledata = [
-    { subactivity: "", currentQuantity: 0, requestedQuantity: 0, unitOfMeasure: "", contractPrice: 0, expectedTotalPrice: 0 }
-  ];
+  // const tabledata = [
+  //   { subactivity: "", currentQuantity: 0, requestedQuantity: 0, unitOfMeasure: "", contractPrice: 0, expectedTotalPrice: 0 }
+  // ];
 
   const toNum = v => {
     if (v == null || v === "") return 0;
@@ -27,7 +28,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     layout: "fitColumns",
     reactiveData: true,
     data: tabledata,
-    columns: [
+    // num currentQuantity  requestedQuantity unitOfMeasure contractPrice expectedTotalPrice
+    columns: [ 
+      // field: "num",
       { title: "#", formatter: "rownum", width: 50, cssClass: "bg-zero" },
 
       { title: "Current Quantity", field: "currentQuantity", sorter: "number", editor: "number" },
@@ -92,17 +95,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (isNaN(num)) {
         alert("Invalid number entered!");
-       
         return;
       }
 
       if (num < 0) {
-        alert("Value cannot be negative!");
-      
+        alert("Value cannot be negative!"); 
         return;
       }
 
-      // Update expectedTotalPrice if valid
       const total = toNum(data.contractPrice) * toNum(data.requestedQuantity);
       row.update({ expectedTotalPrice: total });
     }
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("reactivity-add").addEventListener("click", async (e) => {
     const row = await table.addRow({
-      subactivity: "",
+     // subactivity: "",
       currentQuantity: 0,
       requestedQuantity: 0,
       unitOfMeasure: "",
@@ -161,9 +161,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     // recalcRow(row);
   });
 
-  document.getElementById("clearTable").addEventListener("click", async (e) => {
-    table.clearData();
-    table.setData(tabledata);
+  document.getElementById("clearTable").addEventListener("click", async () => {
+    clearTable(table , tabledata);
   });
 
   document.getElementById("exportExcel").addEventListener("click", () => {
@@ -176,7 +175,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await fetch("http://localhost:5028/api/subactivities");
     const savedData = await res.json();
-    table.setData(savedData);
+    //table.setData(savedData);
+     tabledata.splice(0, tabledata.length, ...savedData); 
+     table.redraw(true);
   } catch (err) {
     await safeToast("error", "Error! Server not responding.", 2);
   }
@@ -190,13 +191,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     await safeToast("error", "Error! Server not responding.", 2);
   }
 
-  // Save
+  //Save
   document.getElementById("test").addEventListener("click", async () => {
+    const data = table.getData();
+
+    console.log("Saving data:", data);
+
     try {
       const res = await fetch("http://localhost:5028/api/subactivities", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(table.getData())
+        body: JSON.stringify(data)
       });
       if (res.ok) {
         await safeToast("success", "Data saved successfuly!", 1);
@@ -207,5 +212,4 @@ document.addEventListener("DOMContentLoaded", async () => {
       await safeToast("error", "Error! Server not responding.", 2);
     }
   });
-
 }); 
