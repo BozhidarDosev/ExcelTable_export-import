@@ -109,83 +109,82 @@
   
   </form>
   </div>
-</body> -->
+</body-->
+
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen p-6">
   <div class="container mx-auto py-3">
     <form class="space-y-4">
 
       <!-- Toast Container -->
-      <div id="toastContainer" class="fixed top-1 left-1/2 transform -translate-x-1/2 z-50 space-y-1 w-auto max-w-xs"></div>
+      <div id="toastContainer" class="fixed top-1 left-1/2 transform -translate-x-1/2 z-50 space-y-1 w-auto max-w-xs">
+      </div>
 
       <!-- Button Group -->
-      <div class="flex flex-wrap gap-2 w-full lg:w-auto">
-        <button type="button" class="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded transition hover:bg-blue-700" id="reactivity-add">
+      <div class="flex flex-wrap gap-2 w-full lg:w-auto">        
+        <select id="departmentFilter"
+        class="w-full sm:w-auto bg-blue-600 text-white px-3 py-1.5 text-sm rounded transition hover:bg-blue-700">
+            <option value="">-- View last saves --</option>
+        </select>
+        <button type="button"
+          class="w-full sm:w-auto bg-blue-600 text-white px-3 py-1.5 text-sm rounded transition hover:bg-blue-700"
+          id="reactivity-add">
           <i class="fas fa-plus me-1"></i> Add New Sub Activity
         </button>
-        <button type="button" class="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded transition hover:bg-blue-700" id="pasteButton">
+        <button type="button"
+          class="w-full sm:w-auto bg-blue-600 text-white px-3 py-1.5 text-sm rounded transition hover:bg-blue-700"
+          id="pasteButton">
           <i class="fas fa-clone me-1"></i> Duplicate Row
         </button>
-        <button type="button" class="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded transition hover:bg-blue-700" id="deselectButton">
+        <button type="button"
+          class="w-full sm:w-auto bg-blue-600 text-white px-3 py-1.5 text-sm rounded transition hover:bg-blue-700"
+          id="deselectButton">
           <i class="fas fa-xmark me-1"></i> Deselect
         </button>
-        <button type="button" class="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded transition hover:bg-blue-700" id="clearTable">
+        <button type="button"
+          class="w-full sm:w-auto bg-blue-600 text-white px-3 py-1.5 text-sm rounded transition hover:bg-blue-700"
+          id="clearTable">
           <i class="fas fa-trash-can"></i> Clear Table
         </button>
-        <button type="button" class="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded transition hover:bg-blue-700" id="exportExcel">
+        <button type="button"
+          class="w-full sm:w-auto bg-blue-600 text-white px-3 py-1.5 text-sm rounded transition hover:bg-blue-700"
+          id="exportExcel">
           <i class="fas fa-file-arrow-down"></i> Download
         </button>
-        <button type="button" class="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded transition hover:bg-blue-700" id="test">
+        <button type="button"
+          class="w-full sm:w-auto bg-blue-600 text-white px-3 py-1.5 text-sm rounded transition hover:bg-blue-700"
+          id="test">
           <i class="fas fa-save me-1"></i> Save
         </button>
         <div class="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
-        <div id="dropzone" class="flex items-center gap-2 px-3 py-2 border border-dashed border-gray-400 rounded-md cursor-pointer text-sm dark:bg-gray-800">
-          📥 Drag & Drop an Excel (.xlsx) file here
-          <span class="mx-1">or</span>
-          <label for="fileInput" class="underline text-blue-600 dark:text-blue-400 cursor-pointer">click to browse</label>
-          <input id="fileInput" type="file" accept=".xlsx" class="hidden" />
-        </div>
+          <div id="dropzone"
+            class="flex items-center gap-2 px-3 py-2 border border-dashed border-gray-400 rounded-md cursor-pointer text-sm dark:bg-gray-800">
+            📥 Drag & Drop an Excel (.xlsx) file here
+            <span class="mx-1">or</span>
+            <label for="fileInput" class="underline text-blue-600 dark:text-blue-400 cursor-pointer">click to
+              browse</label>
+            <input id="fileInput" type="file" accept=".xlsx" class="hidden" />
+          </div>
 
-        <!-- Theme Switcher -->
-         <div class="flex justify-center sm:justify-start">
-       <button
-        class="theme-switcher-grid"
-        id="theme-switcher-grid"
-        aria-label="Switch theme"
-        type="button"
-      >
-        <div class="sun" id="sun" aria-hidden="true"></div>
-        <div class="moon-overlay" id="moon-overlay" aria-hidden="true"></div>
-        <div
-          class="cloud-ball cloud-ball-left"
-          id="ball1"
-          aria-hidden="true"
-        ></div>
-        <div
-          class="cloud-ball cloud-ball-middle"
-          id="ball2"
-          aria-hidden="true"
-        ></div>
-        <div
-          class="cloud-ball cloud-ball-right"
-          id="ball3"
-          aria-hidden="true"
-        ></div>
-        <div
-          class="cloud-ball cloud-ball-top"
-          id="ball4"
-          aria-hidden="true"
-        ></div>
-        <div class="star" id="star1" aria-hidden="true"></div>
-        <div class="star" id="star2" aria-hidden="true"></div>
-        <div class="star" id="star3" aria-hidden="true"></div>
-        <div class="star" id="star4" aria-hidden="true"></div>
-      </button>
-      </div>
-      </div>
+          <!-- Theme Switcher -->
+          <div class="flex justify-center sm:justify-start">
+            <button class="theme-switcher-grid" id="theme-switcher-grid" aria-label="Switch theme" type="button">
+              <div class="sun" id="sun" aria-hidden="true"></div>
+              <div class="moon-overlay" id="moon-overlay" aria-hidden="true"></div>
+              <div class="cloud-ball cloud-ball-left" id="ball1" aria-hidden="true"></div>
+              <div class="cloud-ball cloud-ball-middle" id="ball2" aria-hidden="true"></div>
+              <div class="cloud-ball cloud-ball-right" id="ball3" aria-hidden="true"></div>
+              <div class="cloud-ball cloud-ball-top" id="ball4" aria-hidden="true"></div>
+              <div class="star" id="star1" aria-hidden="true"></div>
+              <div class="star" id="star2" aria-hidden="true"></div>
+              <div class="star" id="star3" aria-hidden="true"></div>
+              <div class="star" id="star4" aria-hidden="true"></div>
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Dropzone -->
-      
+
 
       <!-- Subactivities Table -->
       <div id="subactivities-wrapper" class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
@@ -195,4 +194,5 @@
     </form>
   </div>
 </body>
+
 </html>

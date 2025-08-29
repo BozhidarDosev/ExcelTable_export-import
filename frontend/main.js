@@ -112,6 +112,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
 
+
   // Keep layout crisp
   ["rowAdded", "rowDeleted", "dataSorted", "dataFiltered", "dataLoaded"].forEach((ev) =>
     table.on(ev, () => table.redraw(true))
@@ -215,4 +216,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       await safeToast("error", "Error! Server not responding.", 2);
     }
   });
+
+  
 }); 
