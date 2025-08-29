@@ -28,6 +28,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     layout: "fitColumns",
     reactiveData: true,
     data: tabledata,
+    responsiveLayout:true,
+    
+
     // num currentQuantity  requestedQuantity unitOfMeasure contractPrice expectedTotalPrice
     columns: [ 
       // field: "num",
