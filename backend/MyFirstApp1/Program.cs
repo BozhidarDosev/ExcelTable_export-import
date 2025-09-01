@@ -2,7 +2,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
-List<SubactivityDTO> savedSubactivities = [];
+Dictionary<string, List<SubactivityDTO>> savedSnapshots = new();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
@@ -15,34 +15,56 @@ app.UseCors(policy =>
           .AllowAnyHeader()
 );
 
-// GET: Return saved data
-app.MapGet("/api/subactivities", () =>
+app.MapDelete("/api/subactivities/{name}", (string name) =>
 {
-    return Results.Ok(savedSubactivities);
+    if (savedSnapshots.Remove(name))
+    {
+        Console.WriteLine($"🗑️ Deleted snapshot: {name}");
+        return Results.Ok();
+    }
+    return Results.NotFound("Snapshot not found.");
 });
+
+
+// GET: Return saved data
+app.MapGet("/api/subactivities/{name}", (string name) =>
+{
+    if (savedSnapshots.TryGetValue(name, out var snapshot))
+    {
+        return Results.Ok(snapshot);
+    }
+    return Results.NotFound("Snapshot not found.");
+});
+
+app.MapGet("/api/snapshots", () =>
+{
+    var names = savedSnapshots.Keys.ToList();
+    return Results.Ok(names);
+});
+
 
 var options = new JsonSerializerOptions
 {
     PropertyNameCaseInsensitive = true
 };
-
+  
 // POST: Receive and store updated data
-app.MapPost("/api/subactivities", async (HttpContext context) =>
+app.MapPost("/api/subactivities/{name}", async (HttpContext context, string name) =>
 {
     var data = await JsonSerializer.DeserializeAsync<List<SubactivityDTO>>(context.Request.Body, options);
-
-    if (data != null)
+    if (data is not null)
     {
-        savedSubactivities = data;
-        Console.WriteLine($"✅ Received {data.Count} subactivities.");
-        foreach (var subactivity in data)
-        {
-            Console.WriteLine($"   - CurrentQuantity: {subactivity.CurrentQuantity}, RequestedQuantity: {subactivity.RequestedQuantity}, UnitOfMeasure: {subactivity.UnitOfMeasure}, ContractPrice: {subactivity.ContractPrice}, ExpectedTotalPrice: {subactivity.ExpectedTotalPrice}");
-        }   
+        savedSnapshots[name] = data;
+        Console.WriteLine($"✅ Saved snapshot '{name}' with {data.Count} subactivities.");
         return Results.Ok();
     }
-
     return Results.BadRequest("Invalid data.");
 });
+
+foreach (var endpoint in app.Services.GetRequiredService<EndpointDataSource>().Endpoints)
+{
+    Console.WriteLine($"📌 Endpoint: {endpoint.DisplayName}");
+}
+
 
 app.Run();
